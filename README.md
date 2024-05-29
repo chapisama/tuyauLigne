@@ -10,8 +10,8 @@ To install the scripts available in this repository for Autodesk Maya, please fo
 
 
     Copy the File in the shelve Folder:
-        Navigate to the shelve folder in this repository.
-        Copy the file contained in the shelve folder.
+        Navigate to the shelves folder in this repository.
+        Copy the file contained in the shelves folder.
         Paste the copied file into Maya's default shelves directory. The default shelves directory for Maya is typically:
             C:\Users\<YourUsername>\Documents\maya\<MayaVersion>\prefs\shelves
 
