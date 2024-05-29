@@ -1,0 +1,355 @@
+global proc shelf_tuyauLigne () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create project folders" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "project folders" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "folder" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "folder-new.png" 
+        -image1 "folder-new.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import project_manager_ui as pm\ntry:\n\tif win:\n\t\twin.close()\n\t\twin.deleteLater()\nexcept:\n\tpass\napp=pm.ProjectManagerLaunch()\nwin=app.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "asset Library" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "asset Lib" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "asset Lib" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "both.png" 
+        -image1 "both.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import asset_library_ui as al\n\ntry:\n\tif win:\n\t\twin.close()\n\t\twin.deleteLater()\nexcept:\n\tpass\napp=al.AssetLibraryLaunch()\nwin=app.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "sanity check" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "sanity" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "sanity" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "confirm.png" 
+        -image1 "confirm.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import sanity_check_ui as sc\n\n\ntry:\n\tif win:\n\t\twin.close()\n\t\twin.deleteLater()\nexcept:\n\tpass\napp=sc.SanityCheckLaunch()\nwin=app.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "production tracker" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "tracker" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "tracker" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "batchRender.png" 
+        -image1 "batchRender.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import production_tracker_ui as prot\ntry:\n\tif win:\n\t\twin.close()\n\t\twin.deleteLater()\nexcept:\n\tpass\napp=prot.ProductionTrackerLaunch()\n\nwin=app.run()\n\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 25
+        -enable 1
+        -width 28
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "separator" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "separator" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "branch-vline.svg" 
+        -image1 "branch-vline.svg" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 43
+        -enable 1
+        -width 46
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "create outliner prp_group" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "prp_group" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "prp_group" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "transform.closed.svg" 
+        -image1 "transform.closed.svg" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import prp_group_creator_ui as pgc\n\n\ntry:\n\tif win:\n\t\twin.close()\n\t\twin.deleteLater()\nexcept:\n\tpass\napp=pgc.GroupCreatorLaunch()\nwin=app.run()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "assign mat to proxy meshes" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "prev_mat" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "prev_mat" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "hypershadeIcon.png" 
+        -image1 "hypershadeIcon.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import material_manager as matm\n\nmatm.assign_preview_mat()\n\n    \n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "assign mat to render meshes" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "render_material" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "tmp_mat" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "addWrapInfluence.png" 
+        -image1 "addWrapInfluence.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "from tuyauLigne import material_manager as matm\n\nmatm.assign_tmp_mat()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 25
+        -enable 1
+        -width 28
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "separator" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "separator" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "branch-vline.svg" 
+        -image1 "branch-vline.svg" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "usd viewer" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "USD viewer" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "USD view" 
+        -overlayLabelColor 0 0 0 
+        -overlayLabelBackColor 1 1 1 1 
+        -image "bestPlaneTxt.png" 
+        -image1 "bestPlaneTxt.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "import maya.cmds as cmds\nimport ufe\nfrom pxr import Usd\nimport mayaUsd as uLib\nimport os\nimport sys\nimport subprocess\nif ufe.GlobalSelection.get().empty():\n    cmds.error('Select any ufe item under (and including) gateway node')\nufeItem = ufe.GlobalSelection.get().back()\nufePathGateway = ufe.Path(ufeItem.path().segments[0])\nstage = uLib.ufe.getStage(str(ufePathGateway))\nsdfLayer = stage.GetRootLayer()\nmayaVer = int(cmds.about(q=True, majorVersion=True))\nif mayaVer == 2022:\n    mayapy = os.path.join(os.environ['MAYA_LOCATION'], 'bin', 'mayapy{ver}'.format(ver='' if sys.version_info.major == 3 else '2'))\nelse:\n    mayapy = os.path.join(os.environ['MAYA_LOCATION'], 'bin', 'mayapy')\nusdViewPath = os.path.join(os.environ['USD_LOCATION'], 'bin', 'usdview')\n# Install OpenGL module, if needed\ntry:\n    import OpenGL\nexcept:\n    subprocess.check_call([mayapy, '-m', 'pip', 'install', 'PyOpenGL==3.1.0'])\nCREATE_NO_WINDOW = 0x08000000\nsubprocess.Popen([mayapy, usdViewPath, sdfLayer.realPath], creationflags=CREATE_NO_WINDOW)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 
