@@ -1,6 +1,7 @@
 import os
 
 import maya.cmds as mc
+
 from tuyauLigne import json_manager as jsm
 from tuyauLigne import naming_convention as naco
 from tuyauLigne import outliner_manager as outm

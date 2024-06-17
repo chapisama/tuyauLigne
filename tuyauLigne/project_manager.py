@@ -1,6 +1,7 @@
 import os
 
 import maya.cmds as mc
+
 from tuyauLigne import naming_convention as naco
 
 
@@ -85,6 +86,40 @@ def dict_main_folders():
         "data_folder": os.path.join(root_project_folder, "999_datas")
     }
     return main_folders
+
+
+def dict_sub_asset_folders():
+    """
+    Store all the sub-folder paths within an asset folder.
+
+    Returns:
+        dict: Sub-folders for each key step within the asset folder.
+    """
+    asset_sub_folders = {
+        "publish_folder": "publish",
+        "texture_map_folder": "publish/texture_maps",
+        "wip_folder": "wip",
+        "wip_maya_folder": "wip/maya",
+        "wip_substance_folder": "wip/substance",
+        "wip_usd_folder": "wip/usd"
+    }
+    return asset_sub_folders
+
+
+def dict_sub_set_folders():
+    """
+    Store all the sub-folder paths within a set folder.
+
+    Returns:
+        dict: Sub-folders for each key step within the set folder.
+    """
+    set_sub_folders = {
+        "publish_folder": "publish",
+        "wip_folder": "wip",
+        "wip_substance_folder": "wip/substance",
+        "wip_usd_folder": "wip/usd"
+    }
+    return set_sub_folders
 
 
 def get_publish_folder(asset_name):
@@ -219,14 +254,7 @@ def create_sub_asset_folders(asset_name):
         asset_name (str): Name of the asset.
     """
     main_asset_folder = dict_main_folders().get("asset_folder")
-    asset_sub_folders = {
-        "publish_folder": "publish",
-        "texture_map_folder": "publish/texture_maps",
-        "wip_folder": "wip",
-        "wip_maya_folder": "wip/maya",
-        "wip_substance_folder": "wip/substance",
-        "wip_usd_folder": "wip/usd"
-    }
+    asset_sub_folders = dict_sub_asset_folders()
 
     asset_folder = main_asset_folder + "/" + asset_name
     if not os.path.exists(asset_folder):
@@ -244,12 +272,7 @@ def create_sub_set_folders(set_name):
         set_name (str): Name of the set.
     """
     main_set_folder = dict_main_folders().get("env_folder")
-    set_sub_folders = {
-        "publish_folder": "publish",
-        "wip_folder": "wip",
-        "wip_substance_folder": "wip/substance",
-        "wip_usd_folder": "wip/usd"
-    }
+    set_sub_folders = dict_sub_set_folders()
     set_folder = main_set_folder + "/" + set_name
     if not os.path.exists(set_folder):
         os.makedirs(set_folder)

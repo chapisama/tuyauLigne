@@ -1,7 +1,9 @@
 import os
 
 import maya.cmds as mc
-from pxr import Usd, Sdf, UsdGeom, UsdUtils
+from pxr import Usd, Sdf, UsdGeom, UsdUtils, UsdShade
+
+from tuyauLigne import material_manager as matm
 from tuyauLigne import project_manager as pm
 
 """
@@ -239,9 +241,19 @@ def create_mod_sublayer_usd(asset_name):
     wip_usd_folder = pm.get_wip_usd_folder(asset_name)
     usd_file_name = "modeling_" + asset_name.split("_")[1]
     usd_mod_path = wip_usd_folder + "/" + usd_file_name + ".usd"
-    mc.file(usd_mod_path.split(".")[0],
-            options=f";exportColorSets=0;mergeTransformAndShape=1;exportComponentTags=0;defaultUSDFormat={extension_usd};",
-            typ="USD Export", pr=True, ch=True, chn=True, exportSelected=True, f=True)
+    if not matm.check_arnold_connection():
+        print("gogo sans arnold")
+        mc.file(usd_mod_path.split(".")[0],
+                options=f";exportColorSets=0;mergeTransformAndShape=1;exportComponentTags=0;"
+                        f"defaultUSDFormat={extension_usd}",
+                typ="USD Export", pr=True, ch=True, chn=True, exportSelected=True, f=True)
+    else:
+        print("gogo avec arnold")
+        mc.file(usd_mod_path.split(".")[0],
+                options=f";exportColorSets=0;mergeTransformAndShape=1;exportComponentTags=0;"
+                        f"defaultUSDFormat={extension_usd};jobContext=[Arnold];convertMaterialsTo=[UsdPreviewSurface];"
+                        f"defaultMeshScheme=catmullClark;exportRelativeTextures=relative",
+                typ="USD Export", pr=True, ch=True, chn=True, exportSelected=True, f=True)
     mc.select(d=True)
     set_purpose_proxy(usd_mod_path, asset_name)
     set_purpose_render(usd_mod_path, asset_name)
@@ -394,3 +406,16 @@ def flattening_usd_files(usd_path, target_path):
     stage = Usd.Stage.Open(usd_path)
     flattened_stage = UsdUtils.FlattenLayerStack(stage)
     flattened_stage.Export(target_path)
+
+
+if __name__ == "__main__":
+    usd_path = "F:/testScript/exampleB/020_mod_surf/prp_bolA/wip/usd/modeling_bolA.usd"
+    mtlx_file_path = "./doc_bolA.mtlx"
+    stage = Usd.Stage.Open(usd_path)
+    # prim_path = stage.GetPrimAtPath(f"/{prim_name}")
+
+    material_prim_path = "/prp_bolA/mtl_bolA"
+    material_prim = stage.GetPrimAtPath(material_prim_path)
+    usd_material = UsdShade.Material(material_prim)
+    material_prim.GetReferences().AddReference(Sdf.Reference(mtlx_file_path))
+    stage.GetRootLayer().Save()

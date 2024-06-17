@@ -19,6 +19,7 @@ from functools import partial
 
 import maya.OpenMayaUI as omui
 import maya.cmds as mc
+
 from tuyauLigne import asset_manager as am
 from tuyauLigne import naming_convention as naco
 from tuyauLigne import outliner_manager as outm
@@ -909,8 +910,12 @@ class SanityCheckUi(QtWidgets.QDialog):
                         shader_connexions = mc.listConnections(sg_connection + ".surfaceShader", destination=False,
                                                                source=True)
                         for shader_connexion in shader_connexions:
-                            if mc.nodeType(shader_connexion) != "usdPreviewSurface":
+                            # TMP patch for allowing publish with matx and arnold shader
+                            if mc.nodeType(shader_connexion) != "usdPreviewSurface" and mc.nodeType(
+                                    shader_connexion) != "MaterialXSurfaceShader" and mc.nodeType(
+                                    shader_connexion) != "aiStandardSurface":
                                 self.summary_tmp_mat.append(mesh)
+                            # ---------------------------------------------------------
 
         check_ok = self.return_summary_bool(function, self.summary_tmp_mat)
 
@@ -961,7 +966,12 @@ class SanityCheckUi(QtWidgets.QDialog):
                 short_name = group.split("_")[1]
                 standard_sg_name = "mat_" + short_name + "SG"
                 standard_shader_name = "mat_" + short_name
+                # TMP patch for allowing publish of matx and arnold shader
+                matx_sg_name = "matx_" + short_name + "SG"
+                mat_arnold_name = "mat_" + short_name + "_SG"
+                # ----------------------------------------------
                 meshes_in_render = mc.listRelatives(group, allDescendents=True, type="mesh")
+
                 for mesh in meshes_in_render:
                     sg_connections = mc.listConnections(mesh + ".instObjGroups", destination=True, source=False)
                     for sg_connection in sg_connections:
@@ -972,6 +982,15 @@ class SanityCheckUi(QtWidgets.QDialog):
                         for shader_connexion in shader_connexions:
                             if shader_connexion != standard_shader_name:
                                 self.summary_shader_naming.append(shader_connexion)
+                # TMP patch for allowing publish of matx and arnold shader
+                for mesh in meshes_in_render:
+                    sg_connections = mc.listConnections(mesh + ".instObjGroups", destination=True, source=False)
+                    for sg_connection in sg_connections:
+                        if matx_sg_name in sg_connection:
+                            self.summary_shader_naming.clear()
+                        if mat_arnold_name in sg_connection:
+                            self.summary_shader_naming.clear()
+                # ----------------------------------------------
 
         check_ok = self.return_summary_bool(function, self.summary_shader_naming)
 

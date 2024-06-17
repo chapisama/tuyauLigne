@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<materialx version="1.38" xpos="0.0555556" ypos="0.0555556">
+  <standard_surface name="matx_template" type="surfaceshader" nodedef="ND_standard_surface_surfaceshader" xpos="-1.00583" ypos="-0.794328">
+    <input name="base_color" type="color3" output="basecolor_output" nodegraph="compound_template" />
+    <input name="specular_roughness" type="float" output="roughness_output" nodegraph="compound_template" />
+    <input name="metalness" type="float" output="metallic_output" nodegraph="compound_template" />
+    <input name="normal" type="vector3" output="normal_output" nodegraph="compound_template" />
+    <input name="subsurface" type="float" output="scatteringMask_output" nodegraph="compound_template" />
+    <input name="subsurface_color" type="color3" output="scatteringColor_output" nodegraph="compound_template" />
+    <input name="emission_color" type="color3" output="emissive_output" nodegraph="compound_template" />
+  </standard_surface>
+  <surfacematerial name="matx_templateSG" type="material" nodedef="ND_surfacematerial" xpos="0.741667" ypos="-0.566661">
+    <input name="surfaceshader" type="surfaceshader" nodename="matx_template" />
+  </surfacematerial>
+  <nodegraph name="compound_template" xpos="-3.80044" ypos="-0.503357" Autodesk:ldx_inputPos="1230 2731" Autodesk:ldx_outputPos="1230 1078">
+    <image name="img_roughness" type="color3" nodedef="ND_image_color3" xpos="0.0555556" ypos="6.37222" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__">
+      <input name="file" type="filename" value="" colorspace="Raw" />
+    </image>
+    <image name="img_baseColor" type="color3" nodedef="ND_image_color3" xpos="3.44444" ypos="0.194444" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__" />
+    <output name="basecolor_output" type="color3" nodename="colorcorrect_baseColor" />
+    <separate3 name="separate1" type="multioutput" nodedef="ND_separate3_color3" Autodesk:hidden="true">
+      <input name="in" type="color3" nodename="img_roughness" />
+    </separate3>
+    <image name="img_metallic" type="color3" nodedef="ND_image_color3" xpos="5.13889" ypos="2.2" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__" />
+    <constant name="high_roughness" type="float" nodedef="ND_constant_float" xpos="0.0555556" ypos="4.20556">
+      <input name="value" type="float" value="1" />
+    </constant>
+    <constant name="low_roughness" type="float" nodedef="ND_constant_float" xpos="0.0555556" ypos="5.28889" />
+    <mix name="mix_roughness" type="float" nodedef="ND_mix_float" xpos="1.75" ypos="5.06111">
+      <input name="fg" type="float" nodename="high_roughness" />
+      <input name="bg" type="float" nodename="low_roughness" />
+      <input name="mix" type="float" nodename="separate1" output="outr" />
+    </mix>
+    <colorcorrect name="colorcorrect_baseColor" type="color3" nodedef="ND_colorcorrect_color3" xpos="5.13889" ypos="0.0555556">
+      <input name="in" type="color3" nodename="img_baseColor" />
+    </colorcorrect>
+    <output name="metallic_output" type="float" nodename="separate2" output="outr" />
+    <output name="roughness_output" type="float" nodename="clamp_roughness" />
+    <separate3 name="separate2" type="multioutput" nodedef="ND_separate3_color3" Autodesk:hidden="true">
+      <input name="in" type="color3" nodename="img_metallic" />
+    </separate3>
+    <normalmap name="param_normal" type="vector3" nodedef="ND_normalmap" xpos="5.13889" ypos="6.23333">
+      <input name="in" type="vector3" nodename="img_normal" />
+      <input name="scale" type="float" value="1" />
+    </normalmap>
+    <image name="img_normal" type="vector3" nodedef="ND_image_vector3" xpos="3.44444" ypos="6.27778" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__">
+      <input name="file" type="filename" value="" colorspace="sRGB" />
+    </image>
+    <clamp name="clamp_roughness" type="float" nodedef="ND_clamp_float" xpos="5.13889" ypos="4.88333">
+      <input name="in" type="float" nodename="contrast_roughness" />
+    </clamp>
+    <contrast name="contrast_roughness" type="float" nodedef="ND_contrast_float" xpos="3.44444" ypos="4.92778">
+      <input name="in" type="float" nodename="mix_roughness" />
+    </contrast>
+    <image name="img_emissive" type="color3" nodedef="ND_image_color3" xpos="3.44444" ypos="8.56111" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__" />
+    <colorcorrect name="colorcorrect_emissive" type="color3" nodedef="ND_colorcorrect_color3" xpos="5.13889" ypos="8.25">
+      <input name="in" type="color3" nodename="img_emissive" />
+    </colorcorrect>
+    <image name="img_scatteringMask" type="color3" nodedef="ND_image_color3" xpos="0.0555556" ypos="12.3778" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__" />
+    <image name="img_scatteringColor" type="color3" nodedef="ND_image_color3" xpos="3.44444" ypos="12.2833" Autodesk:previousTexturePath="__NO_TEXTURE_PATH__" />
+    <constant name="high_scattering" type="float" nodedef="ND_constant_float" xpos="0.0555556" ypos="10.2111">
+      <input name="value" type="float" value="1" />
+    </constant>
+    <mix name="mix_scattering" type="float" nodedef="ND_mix_float" xpos="1.75" ypos="11.0667">
+      <input name="fg" type="float" nodename="high_scattering" />
+      <input name="bg" type="float" nodename="low_scattering" />
+      <input name="mix" type="float" nodename="separate4" output="outr" />
+    </mix>
+    <constant name="low_scattering" type="float" nodedef="ND_constant_float" xpos="0.0555556" ypos="11.2944" />
+    <contrast name="contrast_scattering" type="float" nodedef="ND_contrast_float" xpos="3.44444" ypos="10.9333">
+      <input name="in" type="float" nodename="mix_scattering" />
+    </contrast>
+    <clamp name="clamp_scattering" type="float" nodedef="ND_clamp_float" xpos="5.13889" ypos="10.8">
+      <input name="in" type="float" nodename="contrast_scattering" />
+    </clamp>
+    <separate3 name="separate3" type="multioutput" nodedef="ND_separate3_color3" Autodesk:hidden="true" />
+    <separate3 name="separate4" type="multioutput" nodedef="ND_separate3_color3" Autodesk:hidden="true">
+      <input name="in" type="color3" nodename="img_scatteringMask" />
+    </separate3>
+    <output name="scatteringMask_output" type="float" nodename="clamp_scattering" />
+    <colorcorrect name="colorcorrect_scatteringColor" type="color3" nodedef="ND_colorcorrect_color3" xpos="5.13889" ypos="12.15">
+      <input name="in" type="color3" nodename="img_scatteringColor" />
+    </colorcorrect>
+    <output name="scatteringColor_output" type="color3" nodename="colorcorrect_scatteringColor" />
+    <output name="emissive_output" type="color3" nodename="colorcorrect_emissive" />
+    <output name="normal_output" type="vector3" nodename="param_normal" />
+  </nodegraph>
+</materialx>
