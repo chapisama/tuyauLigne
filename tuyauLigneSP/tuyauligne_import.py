@@ -8,6 +8,15 @@ from tuyauLigneSP import project_manager as pm
 
 
 def get_prp_list(combo_project_list):
+    """
+    Get the list of prop folders from the selected project.
+
+    Parameters:
+        combo_project_list (QComboBox): The combo box containing the list of projects.
+
+    Returns:
+        list: A list of prop folder names.
+    """
     asset_folder = pm.dict_main_folders(combo_project_list).get("asset_folder")
     prop_folders = os.listdir(asset_folder)
     prop_list = []
@@ -19,6 +28,15 @@ def get_prp_list(combo_project_list):
 
 
 def get_set_list(combo_project_list):
+    """
+    Get the list of set folders from the selected project.
+
+    Parameters:
+        combo_project_list (QComboBox): The combo box containing the list of projects.
+
+    Returns:
+        list: A list of set folder names.
+    """
     env_folder = pm.dict_main_folders(combo_project_list).get("env_folder")
     env_folders = os.listdir(env_folder)
     set_list = []
@@ -54,6 +72,16 @@ def save_project(spp_file):
 
 
 def set_settings(combo_subdiv, combo_udim):
+    """
+    Set the project settings based on the subdivision level and UDIM workflow.
+
+    Parameters:
+        combo_subdiv (QComboBox): The combo box containing the subdivision level.
+        combo_udim (QComboBox): The combo box containing the UV workflow, with or without UDIM.
+
+    Returns:
+        substance_painter.project.Settings: The project settings object.
+    """
     subdiv_level = int(combo_subdiv.currentText())
     udim = False
     if combo_udim.currentText() == "no":
@@ -295,6 +323,12 @@ def update_asset_list(combo_project_list, list_asset):
 def update_searched_asset(combo_project_list, combo_asset_type, entry_search, list_asset):
     """
     Updates the list of assets based on the entry provided by the user.
+
+    Parameters:
+        combo_project_list (QComboBox): The combo box containing the list of projects.
+        combo_asset_type (QComboBox): The combo box containing the type of assets (all, prp, set).
+        entry_search (QLineEdit): The search input field.
+        list_asset (QListWidget): The widget where the assets will be listed.
     """
 
     prp_list = get_prp_list(combo_project_list)
@@ -467,6 +501,18 @@ def create_ui():
 
 def toggle_visibility_parameters(combo_project_list, list_asset, combo_subdiv, combo_udim, lbl_subdiv, lbl_udim,
                                  btn_open):
+    """
+    Toggle the visibility of project parameter widgets based on the selected asset.
+
+    Parameters:
+        combo_project_list (QComboBox): The combo box containing the list of projects.
+        list_asset (QListWidget): The widget containing the list of assets.
+        combo_subdiv (QComboBox): The combo box for subdivision levels.
+        combo_udim (QComboBox): The combo box for UDIM workflow.
+        lbl_subdiv (QLabel): The label for subdivision levels.
+        lbl_udim (QLabel): The label for UDIM workflow.
+        btn_open (QPushButton): The button to open or import a project.
+    """
     asset_name = list_asset.currentItem().text()
     widgets = [combo_subdiv, combo_udim, lbl_subdiv, lbl_udim]
     if "prp_" in asset_name:

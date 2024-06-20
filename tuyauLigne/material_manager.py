@@ -135,8 +135,11 @@ def assign_arnold_mat():
     asset_name = naco.dict_file_name_part(file_name).get("asset_name")
     short_name = naco.dict_file_name_part(file_name).get("asset_short_name")
     render_meshes = mc.listRelatives("render_*", allDescendents=True, fullPath=True, type="mesh")
-    texture_nodes = []
+
     shading_node, shading_group = ars.create_core_nodes(short_name)
+    # following code in comment : connecting placed2Dtexture (optional with usd mat)
+    '''
+    texture_nodes = []
     textures_path, texture_files = get_textures_list(asset_name)
     basecolor_node = ars.create_base_color(short_name, textures_path, texture_files, shading_node)
     roughness_node = ars.create_roughness(short_name, textures_path, texture_files, shading_node)
@@ -144,10 +147,13 @@ def assign_arnold_mat():
     scatter_msk_node = ars.create_scattering_mask(short_name, textures_path, texture_files, shading_node)
     normal_node = ars.create_normal(short_name, textures_path, texture_files, shading_node)
     scattercolor_node = ars.create_scattering_color(short_name, textures_path, texture_files, shading_node)
+    emission_node = ars.create_emission(short_name, textures_path, texture_files, shading_node)
+    translucency_node=ars.create_translucency(short_name, textures_path, texture_files, shading_node)
+    abscolor_node=ars.create_abs_color(short_name, textures_path, texture_files, shading_node)
     if basecolor_node:
         texture_nodes.append(basecolor_node)
     if roughness_node:
-        texture_nodes.append(roughness_node)
+         texture_nodes.append(roughness_node)
     if metallic_node:
         texture_nodes.append(metallic_node)
     if normal_node:
@@ -156,7 +162,14 @@ def assign_arnold_mat():
         texture_nodes.append(scatter_msk_node)
     if scattercolor_node:
         texture_nodes.append(scattercolor_node)
+    if emission_node:
+        texture_nodes.append(emission_node)
+    if translucency_node:
+        texture_nodes.append(translucency_node)
+    if abscolor_node:
+        texture_nodes.append(abscolor_node)
     ars.connect_placed_texture(short_name, texture_nodes)
+    '''
     for mesh in render_meshes:
         connections = mc.listConnections(mesh + ".instObjGroups", destination=True, source=False)
         for connection in connections:
@@ -167,9 +180,38 @@ def assign_arnold_mat():
     delete_unused_shaders()
 
 
+def assign_preview_texture():
+    """
+    Assigns a preview texture to all meshes in the proxy groups.
+    """
+    delete_unused_shaders()
+    file_name = naco.get_file_name()
+    asset_name = naco.dict_file_name_part(file_name).get("asset_name")
+    short_name = naco.dict_file_name_part(file_name).get("asset_short_name")
+    proxy_meshes = mc.listRelatives("proxy_*", allDescendents=True, fullPath=True, type="mesh")
+    for mesh in proxy_meshes:
+        shading_groups = mc.listConnections(mesh, type='shadingEngine')
+        if shading_groups:
+            shading_group = shading_groups[0]
+            shaders = mc.listConnections(f'{shading_group}.surfaceShader')
+            if shaders:
+                shading_node = shaders[0]
+                break
+    usd_texture = ""
+    textures_path, texture_files = get_textures_list(asset_name)
+    usd_texture = ""
+    for texture in texture_files:
+        if "usdPrev_" in texture:
+            usd_texture = texture
+
+    img_node = mc.shadingNode("file", asTexture=True, name=f'img_baseColor_{short_name}')
+    mc.setAttr(f'{img_node}.fileTextureName', os.path.join(textures_path, texture).replace("\\", "/"), type="string")
+
+    mc.connectAttr(f'{img_node}.outColor', f'{shading_node}.diffuseColor')
+
+
 def delete_unused_shaders():
     """
     Deletes unused shaders in the Maya scene.
     """
     mel.eval('hyperShadePanelMenuCommand("hyperShadePanel1", "deleteUnusedNodes");')
-

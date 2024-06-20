@@ -94,6 +94,7 @@ def create_asset_from_proxy():
             if not jsm.check_existing_value(asset_name):
                 jsm.add_value(asset_name)
             render_group = outm.create_render_group(asset_name)
+            outm.toggle_visibility_on(all_objects)
             outm.unparent(asset_name)
             asset_transforms = outm.store_element_transforms(asset_name)
             outm.center_element_world(asset_name)
@@ -124,6 +125,8 @@ def create_asset_from_prp():
     elif mc.file(q=True, sceneName=True, shortName=True).split("_")[0] != "prp":
         print("this maya scene is not a prop scene")
     else:
+        all_objects = mc.ls(type="transform")
+        outm.toggle_visibility_on(all_objects)
         asset_name = outm.get_master_grp_name()
         publish_folder = pm.get_publish_folder(asset_name)
         publish_file_name = asset_name + "_publish.usdc"

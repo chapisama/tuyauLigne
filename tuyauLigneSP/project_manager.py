@@ -38,11 +38,23 @@ def get_project_path(project_name):
 
 
 def get_current_project_path():
+    """
+    Get the current project's file path from Substance Painter.
+
+    Returns:
+        str: The file path of the current project.
+    """
     current_file_path = substance_painter.project.file_path()
     return current_file_path
 
 
 def dict_split_folders():
+    """
+    Split the current project path into component folders and create a dictionary of specific folder paths.
+
+    Returns:
+        dict: A dictionary containing paths to specific folders related to the current project.
+    """
     file_path = get_current_project_path()
     split_path = file_path.replace('\\', '/').split('/')
     dict_folders = {
@@ -56,6 +68,12 @@ def dict_split_folders():
 
 
 def get_textures_folder():
+    """
+    Get the path to the textures folder based on the current project structure.
+
+    Returns:
+        str: The path to the textures folder.
+    """
     project_folder = dict_split_folders().get("project_folder")
     dpt_folder = dict_split_folders().get("dpt_folder")
     asset_folder = dict_split_folders().get("asset_folder")
@@ -134,6 +152,9 @@ def check_existing_spp(spp_file_path):
 
 
 def rename_textures():
+    """
+    Rename texture files in the textures folder by removing the "SG_" prefix.
+    """
     textures_folder = get_textures_folder()
     files = os.listdir(textures_folder)
     for file in files:

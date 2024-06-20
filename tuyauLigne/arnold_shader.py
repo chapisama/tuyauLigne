@@ -2,9 +2,6 @@ import os
 
 import maya.cmds as mc
 
-from tuyauLigne import material_manager as matm
-from tuyauLigne import naming_convention as naco
-
 
 def create_core_nodes(short_name):
     """
@@ -47,6 +44,7 @@ def create_base_color(short_name, textures_path, texture_files, shading_node):
             if len(basecolor_files) > 1:
                 for basecolor_file in basecolor_files:
                     if "1001" in basecolor_file:
+                        basecolor_file = basecolor_file.replace("1001", "<udim>")
                         texture_to_set = basecolor_file
 
     if basecolor_files:
@@ -61,8 +59,6 @@ def create_base_color(short_name, textures_path, texture_files, shading_node):
         mc.setAttr(f'{basecolor_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{basecolor_node}.colorSpace', "sRGB", type='string')
         mc.setAttr(f'{basecolor_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{basecolor_node}.uvTilingMode', 3)
 
     return basecolor_node
 
@@ -92,6 +88,7 @@ def create_roughness(short_name, textures_path, texture_files, shading_node):
             if len(roughness_files) > 1:
                 for roughness_file in roughness_files:
                     if "1001" in roughness_file:
+                        roughness_file = roughness_file.replace("1001", "<udim>")
                         texture_to_set = roughness_file
 
     if roughness_files:
@@ -109,8 +106,6 @@ def create_roughness(short_name, textures_path, texture_files, shading_node):
         mc.setAttr(f'{roughness_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{roughness_node}.colorSpace', "Raw", type='string')
         mc.setAttr(f'{roughness_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{roughness_node}.uvTilingMode', 3)
 
     return roughness_node
 
@@ -140,6 +135,7 @@ def create_metallic(short_name, textures_path, texture_files, shading_node):
             if len(metallic_files) > 1:
                 for metallic_file in metallic_files:
                     if "1001" in metallic_file:
+                        metallic_file = metallic_file.replace("1001", "<udim>")
                         texture_to_set = metallic_file
 
     if metallic_files:
@@ -157,8 +153,6 @@ def create_metallic(short_name, textures_path, texture_files, shading_node):
         mc.setAttr(f'{metallic_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{metallic_node}.colorSpace', "Raw", type='string')
         mc.setAttr(f'{metallic_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{metallic_node}.uvTilingMode', 3)
 
     return metallic_node
 
@@ -188,6 +182,7 @@ def create_normal(short_name, textures_path, texture_files, shading_node):
             if len(normal_files) > 1:
                 for normal_file in normal_files:
                     if "1001" in normal_file:
+                        normal_file = normal_file.replace("1001", "<udim>")
                         texture_to_set = normal_file
 
     if normal_files:
@@ -201,8 +196,6 @@ def create_normal(short_name, textures_path, texture_files, shading_node):
         mc.setAttr(f'{normal_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{normal_node}.colorSpace', "Raw", type='string')
         mc.setAttr(f'{normal_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{normal_node}.uvTilingMode', 3)
 
     return normal_node
 
@@ -232,6 +225,7 @@ def create_scattering_mask(short_name, textures_path, texture_files, shading_nod
             if len(scatter_msk_files) > 1:
                 for scatter_msk_file in scatter_msk_files:
                     if "1001" in scatter_msk_file:
+                        scatter_msk_file = scatter_msk_file.replace("1001", "<udim>")
                         texture_to_set = scatter_msk_file
 
     if scatter_msk_files:
@@ -249,29 +243,8 @@ def create_scattering_mask(short_name, textures_path, texture_files, shading_nod
         mc.setAttr(f'{scatter_msk_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{scatter_msk_node}.colorSpace', "Raw", type='string')
         mc.setAttr(f'{scatter_msk_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{scatter_msk_node}.uvTilingMode', 3)
 
     return scatter_msk_node
-
-
-def connect_placed_texture(short_name, texture_nodes):
-    """
-    Creates and connects a placed texture node to the provided texture nodes.
-
-    Parameters:
-        short_name (str): The short name for the asset.
-        texture_nodes (list): List of texture nodes to connect to the placed texture node.
-    """
-    attributes_output = ['outUV']
-    attributes_input = ['uvcoords']
-
-    place2d_name = f'place2dTexture_{short_name}'
-    place2d_node = mc.shadingNode('place2dTexture', asUtility=True, name=f'{place2d_name}')
-
-    for texture_node in texture_nodes:
-        for att_output, att_input in zip(attributes_output, attributes_input):
-            mc.connectAttr(f'{place2d_node}.{att_output}', f'{texture_node}.{att_input}')
 
 
 def create_scattering_color(short_name, textures_path, texture_files, shading_node):
@@ -299,6 +272,7 @@ def create_scattering_color(short_name, textures_path, texture_files, shading_no
             if len(scattercolor_files) > 1:
                 for scattercolor_file in scattercolor_files:
                     if "1001" in scattercolor_file:
+                        scattercolor_file = scattercolor_file.replace("1001", "<udim>")
                         texture_to_set = scattercolor_file
 
     if scattercolor_files:
@@ -313,7 +287,160 @@ def create_scattering_color(short_name, textures_path, texture_files, shading_no
         mc.setAttr(f'{scattercolor_node}.ignoreColorSpaceFileRules', True)
         mc.setAttr(f'{scattercolor_node}.colorSpace', "sRGB", type='string')
         mc.setAttr(f'{scattercolor_node}.autoTx', 0)
-        if "1001" in texture_to_set:
-            mc.setAttr(f'{scattercolor_node}.uvTilingMode', 3)
 
     return scattercolor_node
+
+
+def create_emission(short_name, textures_path, texture_files, shading_node):
+    """
+    Creates and connects the emission color texture to the shading node.
+
+    Parameters:
+        short_name (str): The short name for the asset.
+        textures_path (str): The directory path where texture files are located.
+        texture_files (list): List of texture file names.
+        shading_node (str): The shading node to which the texture will be connected.
+
+    Returns:
+        str: The created emission color texture node.
+    """
+    emission_files = []
+    texture_to_set = ""
+    emission_node = None
+
+    for texture_file in texture_files:
+        if "_emissive" in texture_file and "mat_" in texture_file:
+            emission_files.append(texture_file)
+            if len(emission_files) == 1:
+                texture_to_set = texture_file
+            if len(emission_files) > 1:
+                for emission_file in emission_files:
+                    if "1001" in emission_file:
+                        emission_file = emission_file.replace("1001", "<udim>")
+                        texture_to_set = emission_file
+
+    if emission_files:
+        emission_path = os.path.join(textures_path, texture_to_set).replace("\\", "/")
+        emission_node = mc.shadingNode('aiImage', asTexture=True, name=f'img_emission_{short_name}')
+        color_correct_node = mc.shadingNode("aiColorCorrect", asUtility=True,
+                                            name=f"colorCorrect_emission_{short_name}")
+        mc.connectAttr(f'{emission_node}.outColor', f'{color_correct_node}.input')
+        mc.connectAttr(f'{color_correct_node}.outColor', f'{shading_node}.emissionColor')
+
+        mc.setAttr(f'{emission_node}.filename', f'{emission_path}', type='string')
+        mc.setAttr(f'{emission_node}.ignoreColorSpaceFileRules', True)
+        mc.setAttr(f'{emission_node}.colorSpace', "sRGB", type='string')
+        mc.setAttr(f'{emission_node}.autoTx', 0)
+        mc.setAttr(f'{shading_node}.emission', 1)
+
+    return emission_node
+
+
+def create_translucency(short_name, textures_path, texture_files, shading_node):
+    """
+    Creates and connects the translucency mask texture to the shading node.
+
+    Parameters:
+        short_name (str): The short name for the asset.
+        textures_path (str): The directory path where texture files are located.
+        texture_files (list): List of texture file names.
+        shading_node (str): The shading node to which the texture will be connected.
+
+    Returns:
+        str: The created translucency mask texture node.
+    """
+    translucency_files = []
+    texture_to_set = ""
+    translucency_node = None
+
+    for texture_file in texture_files:
+        if "translucency" in texture_file and "mat_" in texture_file:
+            translucency_files.append(texture_file)
+            if len(translucency_files) == 1:
+                texture_to_set = texture_file
+            if len(translucency_files) > 1:
+                for translucency_file in translucency_files:
+                    if "1001" in translucency_file:
+                        translucency_file = translucency_file.replace("1001", "<udim>")
+                        texture_to_set = translucency_file
+
+    if translucency_files:
+        translucency_path = os.path.join(textures_path, texture_to_set).replace("\\", "/")
+        translucency_node = mc.shadingNode('aiImage', asTexture=True, name=f'img_translucency_{short_name}')
+        range_node = mc.shadingNode("aiRange", asUtility=True, name=f"range_translucency_{short_name}")
+        clamp_node = mc.shadingNode("aiClamp", asUtility=True, name=f"clamp_translucency_{short_name}")
+        color_to_float = mc.shadingNode("aiColorToFloat", asUtility=True, name="color_to_float_translucency")
+        mc.connectAttr(f'{translucency_node}.outColor ', f'{range_node}.input')
+        mc.connectAttr(f'{range_node}.outColor', f'{clamp_node}.input')
+        mc.connectAttr(f'{clamp_node}.outColor', f'{color_to_float}.input')
+        mc.connectAttr(f'{color_to_float}.outValue', f'{shading_node}.transmission')
+
+        mc.setAttr(f'{translucency_node}.filename', f'{translucency_path}', type='string')
+        mc.setAttr(f'{translucency_node}.ignoreColorSpaceFileRules', True)
+        mc.setAttr(f'{translucency_node}.colorSpace', "Raw", type='string')
+        mc.setAttr(f'{translucency_node}.autoTx', 0)
+
+    return translucency_node
+
+
+def create_abs_color(short_name, textures_path, texture_files, shading_node):
+    """
+    Creates and connects the absorption color texture to the shading node.
+
+    Parameters:
+        short_name (str): The short name for the asset.
+        textures_path (str): The directory path where texture files are located.
+        texture_files (list): List of texture file names.
+        shading_node (str): The shading node to which the texture will be connected.
+
+    Returns:
+        str: The created absorption color texture node.
+    """
+    abscolor_files = []
+    texture_to_set = ""
+    abscolor_node = None
+
+    for texture_file in texture_files:
+        if "_absorptionColor" in texture_file and "mat_" in texture_file:
+            abscolor_files.append(texture_file)
+            if len(abscolor_files) == 1:
+                texture_to_set = texture_file
+            if len(abscolor_files) > 1:
+                for abscolor_file in abscolor_files:
+                    if "1001" in abscolor_file:
+                        abscolor_file = abscolor_file.replace("1001", "<udim>")
+                        texture_to_set = abscolor_file
+
+    if abscolor_files:
+        abscolor_path = os.path.join(textures_path, texture_to_set).replace("\\", "/")
+        abscolor_node = mc.shadingNode('aiImage', asTexture=True, name=f'img_abscolor_{short_name}')
+        color_correct_node = mc.shadingNode("aiColorCorrect", asUtility=True,
+                                            name=f"colorCorrect_abscolor_{short_name}")
+        mc.connectAttr(f'{abscolor_node}.outColor', f'{color_correct_node}.input')
+        mc.connectAttr(f'{color_correct_node}.outColor', f'{shading_node}.transmissionColor')
+
+        mc.setAttr(f'{abscolor_node}.filename', f'{abscolor_path}', type='string')
+        mc.setAttr(f'{abscolor_node}.ignoreColorSpaceFileRules', True)
+        mc.setAttr(f'{abscolor_node}.colorSpace', "sRGB", type='string')
+        mc.setAttr(f'{abscolor_node}.autoTx', 0)
+
+    return abscolor_node
+
+
+def connect_placed_texture(short_name, texture_nodes):
+    """
+    Creates and connects a placed texture node to the provided texture nodes.
+
+    Parameters:
+        short_name (str): The short name for the asset.
+        texture_nodes (list): List of texture nodes to connect to the placed texture node.
+    """
+    attributes_output = ['outUV']
+    attributes_input = ['uvcoords']
+
+    place2d_name = f'place2dTexture_{short_name}'
+    place2d_node = mc.shadingNode('place2dTexture', asUtility=True, name=f'{place2d_name}')
+
+    for texture_node in texture_nodes:
+        for att_output, att_input in zip(attributes_output, attributes_input):
+            mc.connectAttr(f'{place2d_node}.{att_output}', f'{texture_node}.{att_input}')

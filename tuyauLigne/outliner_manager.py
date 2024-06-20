@@ -1,4 +1,5 @@
 import maya.cmds as mc
+
 from tuyauLigne import naming_convention as naco
 
 
@@ -59,6 +60,17 @@ def parent(asset_name, main_grp):
         main_grp (str): Name of the main group, same as the file name.
     """
     mc.parent(asset_name, main_grp)
+
+
+def toggle_visibility_on(element_list):
+    """
+    Turns on the visibility for a list of elements.
+
+    Parameters:
+        element_list (list): List of elements to change visibility.
+    """
+    for element in element_list:
+        mc.setAttr(f'{element}.visibility', 1)
 
 
 def store_element_transforms(asset_name):
