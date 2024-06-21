@@ -1,4 +1,12 @@
-## Installation Instructions
+## Description
+
+tuyauLigne is a pipeline project under development, for 3D artists who work solo. It integrates with the software Maya
+and Substance
+Painter. The goal is to automate certain tasks such as file imports/exports and the organization of Maya's outliner.
+This pipeline aims to integrate the .usd format. It also establishes consistent naming conventions. More details here :
+> **Video link**: https://youtu.be/NPwCX9sK2TY
+
+# Installation Instructions
 
 To install the scripts available in this repository for Autodesk Maya and Substance Painter, please follow these steps:
 > **Compatibility** :Maya 2025.1, Substance Painter 10.0
