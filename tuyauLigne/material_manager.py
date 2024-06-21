@@ -138,7 +138,7 @@ def assign_arnold_mat():
 
     shading_node, shading_group = ars.create_core_nodes(short_name)
     # following code in comment : connecting placed2Dtexture (optional with usd mat)
-    '''
+
     texture_nodes = []
     textures_path, texture_files = get_textures_list(asset_name)
     basecolor_node = ars.create_base_color(short_name, textures_path, texture_files, shading_node)
@@ -148,8 +148,9 @@ def assign_arnold_mat():
     normal_node = ars.create_normal(short_name, textures_path, texture_files, shading_node)
     scattercolor_node = ars.create_scattering_color(short_name, textures_path, texture_files, shading_node)
     emission_node = ars.create_emission(short_name, textures_path, texture_files, shading_node)
-    translucency_node=ars.create_translucency(short_name, textures_path, texture_files, shading_node)
-    abscolor_node=ars.create_abs_color(short_name, textures_path, texture_files, shading_node)
+    translucency_node = ars.create_translucency(short_name, textures_path, texture_files, shading_node)
+    abscolor_node = ars.create_abs_color(short_name, textures_path, texture_files, shading_node)
+    '''
     if basecolor_node:
         texture_nodes.append(basecolor_node)
     if roughness_node:
