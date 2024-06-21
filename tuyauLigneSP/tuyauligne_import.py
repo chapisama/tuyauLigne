@@ -385,8 +385,11 @@ def create_ui():
     import_widget.setWindowTitle("Tuyau Ligne Open ")
 
     # Creates the boxes
+    hbox_lbl_add = QtWidgets.QHBoxLayout()
     hbox_add_project = QtWidgets.QHBoxLayout()
+    hbox_lbl_list = QtWidgets.QHBoxLayout()
     hbox_project_list = QtWidgets.QHBoxLayout()
+    hbox_lbl_search= QtWidgets.QHBoxLayout()
     hbox_search = QtWidgets.QHBoxLayout()
     hbox_asset_list = QtWidgets.QHBoxLayout()
     hbox_import = QtWidgets.QHBoxLayout()
@@ -395,19 +398,21 @@ def create_ui():
     lbl_add_project = QtWidgets.QLabel()
     lbl_add_project.setText("Add a project :")
     entry_add_project = QtWidgets.QLineEdit()
+    entry_add_project.setMinimumWidth(200)
     btn_search_project = QtWidgets.QPushButton("...")
-    btn_search_project.setMaximumWidth(26)
+    btn_search_project.setStyleSheet("padding: 2px 2px 2px 2px; max-width:40px;min-width:30px")
     btn_add_project = QtWidgets.QPushButton("+")
-    btn_add_project.setMaximumWidth(26)
+    btn_add_project.setStyleSheet("padding: 2px 2px 2px 2px; max-width:40px;min-width:30px")
 
     lbl_project_list = QtWidgets.QLabel()
     lbl_project_list.setText("Project list :")
     combo_project_list = QtWidgets.QComboBox()
-    combo_project_list.setMinimumWidth(200)
+    combo_project_list.setMinimumWidth(80)
     btn_remove_project = QtWidgets.QPushButton("-")
+    btn_remove_project.setStyleSheet("padding: 2px 2px 2px 2px; max-width:40px;min-width:30px")
 
     lbl_search = QtWidgets.QLabel()
-    lbl_search.setText("Search :")
+    lbl_search.setText("Search asset :")
     combo_asset_type = QtWidgets.QComboBox()
     entry_search = QtWidgets.QLineEdit()
 
@@ -420,20 +425,19 @@ def create_ui():
     lbl_subdiv.setText("Subdiv :")
     combo_subdiv = QtWidgets.QComboBox()
     btn_open = QtWidgets.QPushButton("open")
-    btn_open.setMaximumWidth(26)
 
     # add the widgets to the boxes
-    hbox_add_project.addWidget(lbl_add_project)
+    hbox_lbl_add.addWidget(lbl_add_project)
     hbox_add_project.addWidget(entry_add_project)
     hbox_add_project.addWidget(btn_search_project)
     hbox_add_project.addWidget(btn_add_project)
 
-    hbox_project_list.addWidget(lbl_project_list)
+    hbox_lbl_list.addWidget(lbl_project_list)
     hbox_project_list.addWidget(combo_project_list)
     hbox_project_list.addWidget(btn_remove_project)
     hbox_project_list.addStretch()
 
-    hbox_search.addWidget(lbl_search)
+    hbox_lbl_search.addWidget(lbl_search)
     hbox_search.addWidget(combo_asset_type)
     hbox_search.addWidget(entry_search)
 
@@ -447,8 +451,11 @@ def create_ui():
     hbox_import.addWidget(btn_open)
 
     # add the boxes to the main box
+    import_layout.addLayout(hbox_lbl_add)
     import_layout.addLayout(hbox_add_project)
+    import_layout.addLayout(hbox_lbl_list)
     import_layout.addLayout(hbox_project_list)
+    import_layout.addLayout(hbox_lbl_search)
     import_layout.addLayout(hbox_search)
     import_layout.addLayout(hbox_asset_list)
     import_layout.addLayout(hbox_import)

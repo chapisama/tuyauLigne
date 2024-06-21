@@ -822,17 +822,23 @@ def create_ui():
     export_widget = QtWidgets.QWidget()
     export_layout = QtWidgets.QVBoxLayout(export_widget)
     export_widget.setWindowTitle("Tuyau Ligne Export ")
+    export_widget.setFixedHeight(60)
 
     # Creates the boxes
     hbox_export = QtWidgets.QHBoxLayout()
 
     # Creates the widgets
+    lbl_add_project = QtWidgets.QLabel()
+    lbl_add_project.setText("Export Resolution :")
     combo_resolution = QtWidgets.QComboBox()
+    combo_resolution.setMaximumWidth(80)
     btn_export = QtWidgets.QPushButton("Export")
 
     # add the widgets to the boxes
+    hbox_export.addWidget(lbl_add_project)
     hbox_export.addWidget(combo_resolution)
     hbox_export.addWidget(btn_export)
+    hbox_export.addStretch()
 
     # add the boxes to the main box
     export_layout.addLayout(hbox_export)
